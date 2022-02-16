@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fr.thmarie.parisf1.exception.ResourceNotFoundException;
 import fr.thmarie.parisf1.model.Team;
 import fr.thmarie.parisf1.payload.TeamRequest;
 import fr.thmarie.parisf1.payload.response.TeamResponse;
@@ -26,12 +27,22 @@ public class TeamServiceImpl implements TeamService {
 
 		for (Team returnedTeam : teamRepository.findAll()) {
 			TeamResponse teamResponse = new TeamResponse();
+
 			teamResponse.setName(returnedTeam.getName());
 			teamResponse.setDrivers(returnedTeam.getDrivers());
+
 			allTeams.add(teamResponse);
 		}
 
 		return allTeams;
+	}
+
+	@Override
+	public Team getTeam(String name) {
+		Team team = teamRepository.findById(name).orElseThrow(
+				() -> new ResourceNotFoundException("Team", "name", name));
+
+		return team;
 	}
 
 	@Override

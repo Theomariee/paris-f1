@@ -10,5 +10,7 @@ public interface TeamService {
 
 	List<TeamResponse> getAllTeams();
 
+	Team getTeam(String name);
+
 	Team addTeam(TeamRequest teamRequest);
 }

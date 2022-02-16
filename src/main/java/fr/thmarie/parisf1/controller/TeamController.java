@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,12 @@ public class TeamController {
 	public ResponseEntity<List<TeamResponse>> getAllTeams() {
 		List<TeamResponse> allTeams = teamService.getAllTeams();
 		return new ResponseEntity<>(allTeams, HttpStatus.OK);
+	}
+
+	@GetMapping("/{name}")
+	public ResponseEntity<Team> getTeam(@PathVariable(name = "name") String name) {
+		Team retrievedTeam = teamService.getTeam(name);
+		return new ResponseEntity<>(retrievedTeam, HttpStatus.OK);
 	}
 
 	@PostMapping

@@ -1,11 +1,14 @@
 package fr.thmarie.parisf1.service;
 
-import org.springframework.http.ResponseEntity;
+import java.util.List;
 
 import fr.thmarie.parisf1.model.Team;
 import fr.thmarie.parisf1.payload.TeamRequest;
+import fr.thmarie.parisf1.payload.response.TeamResponse;
 
 public interface TeamService {
 
-	ResponseEntity<Team> addTeam(TeamRequest teamRequest);
+	List<TeamResponse> getAllTeams();
+
+	Team addTeam(TeamRequest teamRequest);
 }

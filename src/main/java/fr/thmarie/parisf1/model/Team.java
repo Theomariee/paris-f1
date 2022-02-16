@@ -10,6 +10,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,6 +25,7 @@ public class Team {
 	@Column(name = "name", nullable = false)
 	private String name;
 
+	@JsonBackReference
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "team")
 	private List<Driver> drivers;
 

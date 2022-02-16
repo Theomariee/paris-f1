@@ -28,6 +28,7 @@ public class TeamServiceImpl implements TeamService {
 			TeamResponse teamResponse = new TeamResponse();
 			teamResponse.setName(returnedTeam.getName());
 			teamResponse.setDrivers(returnedTeam.getDrivers());
+			allTeams.add(teamResponse);
 		}
 
 		return allTeams;

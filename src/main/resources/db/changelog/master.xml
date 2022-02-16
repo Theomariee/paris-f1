@@ -1,0 +1,109 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <!-- Creates schema "bet" -->
+    <changeSet author="thmarie" id="1">
+        <sql dbms="postgresql" endDelimiter=";">
+            CREATE SCHEMA bet;
+        </sql>
+    </changeSet>
+
+    <!-- Creates table "grand_prix_event" -->
+    <changeSet author="thmarie" id="2">
+        <createTable schemaName="bet" tableName="grand_prix_event">
+            <column name="id" autoIncrement="true" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_grand_prix_event"/>
+            </column>
+            <column name="hosting_country" type="VARCHAR(50)"/>
+            <column name="hosting_country_flag_asset" type="VARCHAR(500)"/>
+            <column name="hosting_city" type="VARCHAR(50)"/>
+            <column name="event_name" type="VARCHAR(100)"/>
+            <column name="event_start_date" type="DATETIME"/>
+            <column name="event_end_date" type="DATETIME"/>
+            <column name="bet_end_date" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="thmarie" id="3">
+        <createTable schemaName="bet" tableName="player">
+            <column name="id" autoIncrement="true" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_player"/>
+            </column>
+            <column name="username" type="VARCHAR(20)"/>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="score" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="thmarie" id="4">
+        <createTable schemaName="bet" tableName="team">
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_team"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="thmarie" id="5">
+        <createTable schemaName="bet" tableName="driver">
+            <column name="id" autoIncrement="true" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_driver"/>
+            </column>
+            <column name="first_name" type="VARCHAR(20)"/>
+            <column name="second_name" type="VARCHAR(30)"/>
+            <column name="team_name" type="VARCHAR(100)">
+                <constraints references="bet.team(name)" foreignKeyName="fk_driver_team_name"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="thmarie" id="6">
+        <createTable schemaName="bet" tableName="grand_prix_result">
+            <column name="id" autoIncrement="true" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_grand_prix_result"/>
+            </column>
+            <column name="driver_id" type="BIGINT">
+                <constraints references="bet.driver(id)" foreignKeyName="fk_grand_prix_result_driver_id"/>
+            </column>
+            <column name="grand_prix_event_id" type="BIGINT">
+                <constraints references="bet.grand_prix_event(id)"
+                             foreignKeyName="fk_grand_prix_result_grand_prix_event_id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="thmarie" id="7">
+        <createTable schemaName="bet" tableName="bet">
+            <column name="id" autoIncrement="true" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_bet"/>
+            </column>
+            <column name="player_id" type="BIGINT">
+                <constraints references="bet.player(id)" foreignKeyName="fk_bet_player_id"/>
+            </column>
+            <column name="grand_prix_event_id" type="BIGINT">
+                <constraints references="bet.grand_prix_event(id)" foreignKeyName="fk_bet_grand_prix_event_id"/>
+            </column>
+            <column name="driver_id" type="BIGINT">
+                <constraints references="bet.driver(id)" foreignKeyName="fk_bet_driver_id"/>
+            </column>
+            <column name="race_position" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="thmarie" id="8">
+        <loadData file="datafiles/teams.csv" relativeToChangelogFile="true" quotchar="'" schemaName="bet" separator=";"
+                  tableName="team">
+            <column name="name" type="STRING"/>
+        </loadData>
+    </changeSet>
+
+    <changeSet author="thmarie" id="9">
+        <loadData file="datafiles/drivers.csv" relativeToChangelogFile="true" quotchar="'" schemaName="bet"
+                  separator=";" tableName="driver">
+            <column name="first_name" type="STRING"/>
+            <column name="second_name" type="STRING"/>
+            <column name="team_name" type="STRING"/>
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>

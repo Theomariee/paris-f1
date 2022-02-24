@@ -35,4 +35,7 @@ public class Bet {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "driver_id")
 	private Driver driver;
+
+	@Column(name = "race_position")
+	private int racePosition;
 }

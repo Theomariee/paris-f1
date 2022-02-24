@@ -11,7 +11,7 @@ public class GrandPrixEventResponse {
 
 	private String hostingCountry;
 
-	private String hostingCountryFlagAsset;
+	private String hostingCountryAlphaTwoCode;
 
 	private String hostingCity;
 

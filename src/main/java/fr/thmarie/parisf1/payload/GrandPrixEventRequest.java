@@ -9,7 +9,7 @@ public class GrandPrixEventRequest {
 
 	private String hostingCountry;
 
-	private String hostingCountryFlagAsset;
+	private String hostingCountryAlphaTwoCode;
 
 	private String hostingCity;
 

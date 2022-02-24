@@ -16,7 +16,7 @@
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_grand_prix_event"/>
             </column>
             <column name="hosting_country" type="VARCHAR(50)"/>
-            <column name="hosting_country_flag_asset" type="VARCHAR(500)"/>
+            <column name="hosting_country_alpha_two_code" type="VARCHAR(5)"/>
             <column name="hosting_city" type="VARCHAR(50)"/>
             <column name="event_name" type="VARCHAR(100)"/>
             <column name="event_start_date" type="DATETIME"/>

@@ -91,6 +91,9 @@
 
     <changeSet author="thmarie" id="8">
         <createTable schemaName="bet" tableName="bet_race_position">
+            <column name="id" autoIncrement="true" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_bet_race_position"/>
+            </column>
             <column name="bet_id" type="BIGINT">
                 <constraints references="bet.bet(id)" foreignKeyName="fk_bet_race_position_bet_id"/>
             </column>

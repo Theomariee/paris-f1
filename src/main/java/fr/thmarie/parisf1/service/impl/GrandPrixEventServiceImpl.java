@@ -1,5 +1,6 @@
 package fr.thmarie.parisf1.service.impl;
 
+import fr.thmarie.parisf1.EGrandPrixEventLiveStatus;
 import fr.thmarie.parisf1.exception.ResourceNotFoundException;
 import fr.thmarie.parisf1.model.GrandPrixEvent;
 import fr.thmarie.parisf1.payload.GrandPrixEventRequest;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +27,7 @@ public class GrandPrixEventServiceImpl implements GrandPrixEventService {
     public List<GrandPrixEventResponse> getAllGrandPrixEvents(Long fromDate) {
         List<GrandPrixEvent> allGrandPrixEventsFromDb;
         List<GrandPrixEventResponse> allGrandPrixEvents = new ArrayList<>();
+        Date currentDate = new Date();
 
         if (fromDate == null) {
             allGrandPrixEventsFromDb = grandPrixEventRepository.findAll();
@@ -46,6 +47,7 @@ public class GrandPrixEventServiceImpl implements GrandPrixEventService {
             grandPrixEventResponse.setEventStartDate(returnedGrandPrixEvent.getEventStartDate());
             grandPrixEventResponse.setEventEndDate(returnedGrandPrixEvent.getEventEndDate());
             grandPrixEventResponse.setBetEndDate(returnedGrandPrixEvent.getBetEndDate());
+            grandPrixEventResponse.setLiveStatus(determineLiveStatus(currentDate, returnedGrandPrixEvent.getEventStartDate(), returnedGrandPrixEvent.getEventEndDate(), returnedGrandPrixEvent.getBetEndDate()));
 
             allGrandPrixEvents.add(grandPrixEventResponse);
         }
@@ -116,5 +118,17 @@ public class GrandPrixEventServiceImpl implements GrandPrixEventService {
         grandPrixEventRepository.delete(grandPrixEvent);
 
         return new ApiResponse(Boolean.TRUE, "Successfully deleted GrandPrixEvent.");
+    }
+
+    private EGrandPrixEventLiveStatus determineLiveStatus(Date currentDate, Date eventStartDate, Date eventEndDate, Date betEndDate) {
+        if (currentDate.after(eventEndDate)) {
+            return EGrandPrixEventLiveStatus.ENDED;
+        } else if (currentDate.after(betEndDate)) {
+            return EGrandPrixEventLiveStatus.BETTING_CLOSED;
+        } else if (currentDate.after(eventStartDate)) {
+            return EGrandPrixEventLiveStatus.BETTING_OPEN;
+        } else {
+            return EGrandPrixEventLiveStatus.COMING;
+        }
     }
 }

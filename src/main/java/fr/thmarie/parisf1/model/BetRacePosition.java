@@ -1,5 +1,6 @@
 package fr.thmarie.parisf1.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,27 +20,20 @@ import javax.persistence.Table;
 @Table(name = "bet_race_position")
 public class BetRacePosition {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", nullable = false)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "bet_id")
-	private Bet bet;
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "bet_id")
+    private Bet bet;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "player_id")
-	private Player player;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "driver_id")
+    private Driver driver;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "grand_prix_event_id")
-	private GrandPrixEvent grandPrixEvent;
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "driver_id")
-	private Driver driver;
-
-	@Column(name = "race_position")
-	private int racePosition;
+    @Column(name = "race_position")
+    private int racePosition;
 }

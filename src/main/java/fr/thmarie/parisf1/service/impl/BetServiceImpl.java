@@ -65,8 +65,10 @@ public class BetServiceImpl implements BetService {
         for (Bet returnedBet : allBetsFromDb) {
             BetResponse betResponse = new BetResponse();
 
+            betResponse.setId(returnedBet.getId());
             betResponse.setPlayer(returnedBet.getPlayer());
             betResponse.setGrandPrixEvent(returnedBet.getGrandPrixEvent());
+            betResponse.setBetRacePositions(returnedBet.getRacePositions());
 
             allBets.add(betResponse);
         }

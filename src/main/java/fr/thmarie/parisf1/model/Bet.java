@@ -31,11 +31,11 @@ public class Bet {
     @JoinColumn(name = "player_id")
     private Player player;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "grand_prix_event_id")
     private GrandPrixEvent grandPrixEvent;
 
-    @JsonBackReference
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "bet")
     private List<BetRacePosition> racePositions;
 

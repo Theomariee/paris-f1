@@ -10,6 +10,9 @@
     </changeSet>
 
     <!-- Creates table "grand_prix_event" -->
+    <!-- INSERT INTO bet.grand_prix_event (id, hosting_country, hosting_country_alpha_two_code, hosting_city, event_name, event_start_date, event_end_date, bet_end_date)
+         VALUES (1, 'Barheïn', 'BH', 'Manama', 'Grand Prix de Sakhir', '2023-02-18 14:00:00.000000', '2023-02-20 19:00:00.000000', '2023-02-19 19:30:00.000000');
+    -->
     <changeSet author="thmarie" id="2">
         <createTable schemaName="bet" tableName="grand_prix_event">
             <column name="id" autoIncrement="true" type="BIGINT">
@@ -83,21 +86,29 @@
             <column name="grand_prix_event_id" type="BIGINT">
                 <constraints references="bet.grand_prix_event(id)" foreignKeyName="fk_bet_grand_prix_event_id"/>
             </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="thmarie" id="8">
+        <createTable schemaName="bet" tableName="bet_race_position">
+            <column name="bet_id" type="BIGINT">
+                <constraints references="bet.bet(id)" foreignKeyName="fk_bet_race_position_bet_id"/>
+            </column>
             <column name="driver_id" type="BIGINT">
-                <constraints references="bet.driver(id)" foreignKeyName="fk_bet_driver_id"/>
+                <constraints references="bet.driver(id)" foreignKeyName="fk_bet_race_position_driver_id"/>
             </column>
             <column name="race_position" type="BIGINT"/>
         </createTable>
     </changeSet>
 
-    <changeSet author="thmarie" id="8">
+    <changeSet author="thmarie" id="9">
         <loadData file="datafiles/teams.csv" relativeToChangelogFile="true" quotchar="'" schemaName="bet" separator=";"
                   tableName="team">
             <column name="name" type="STRING"/>
         </loadData>
     </changeSet>
 
-    <changeSet author="thmarie" id="9">
+    <changeSet author="thmarie" id="10">
         <loadData file="datafiles/drivers.csv" relativeToChangelogFile="true" quotchar="'" schemaName="bet"
                   separator=";" tableName="driver">
             <column name="first_name" type="STRING"/>

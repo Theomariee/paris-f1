@@ -9,7 +9,7 @@ import fr.thmarie.parisf1.payload.response.GrandPrixEventResponse;
 
 public interface GrandPrixEventService {
 
-	List<GrandPrixEventResponse> getAllGrandPrixEvents();
+	List<GrandPrixEventResponse> getAllGrandPrixEvents(Long fromDate);
 
 	GrandPrixEvent getGrandPrixEvent(Long id);
 

@@ -10,7 +10,9 @@ import lombok.Data;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TeamResponse {
+
 	private String name;
 
 	private List<Driver> drivers;
+
 }

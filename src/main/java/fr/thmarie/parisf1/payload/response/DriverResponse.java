@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DriverResponse {
+
 	private Long id;
 
 	private String firstName;
@@ -15,4 +16,5 @@ public class DriverResponse {
 	private String secondName;
 
 	private Team team;
+
 }

@@ -1,7 +1,9 @@
 package fr.thmarie.parisf1.payload.response;
 
 import java.util.Date;
+import java.util.List;
 
+import fr.thmarie.parisf1.model.Bet;
 import lombok.Data;
 
 @Data

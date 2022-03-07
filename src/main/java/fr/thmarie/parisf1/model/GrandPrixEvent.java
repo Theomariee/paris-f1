@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Table(name = "grand_prix_event")
 public class GrandPrixEvent {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)

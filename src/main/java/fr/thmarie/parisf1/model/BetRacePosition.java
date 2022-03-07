@@ -1,5 +1,8 @@
 package fr.thmarie.parisf1.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,16 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "grand_prix_result")
-public class GrandPrixResult {
+@Table(name = "bet_race_position")
+public class BetRacePosition {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,15 +25,21 @@ public class GrandPrixResult {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "driver_id")
-	private Driver driver;
+	@JoinColumn(name = "bet_id")
+	private Bet bet;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "player_id")
+	private Player player;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "grand_prix_event_id")
 	private GrandPrixEvent grandPrixEvent;
 
-	public GrandPrixResult(@NotNull Driver driver, @NotNull GrandPrixEvent grandPrixEvent) {
-		this.driver = driver;
-		this.grandPrixEvent = grandPrixEvent;
-	}
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "driver_id")
+	private Driver driver;
+
+	@Column(name = "race_position")
+	private int racePosition;
 }
